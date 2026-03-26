@@ -6,7 +6,7 @@
 
 int main()
 {
-	int socketdesc,clientsock,clientsize;
+	int socketdesc,clientsock,clientsize;//clientsize is not int it is socklen_t
 	struct sockaddr_in serveraddr,clientaddr;
 	char servermsg[2000],clientmsg[2000];
 	
@@ -70,7 +70,7 @@ int main()
 	if(send(clientsock,servermsg,strlen(servermsg),0) < 0)
 	{
 
-        
+
 		printf("Cant send");
 		return -1;
 	}
