@@ -6,7 +6,7 @@
 
 int main()
 {
-	int socketdesc,clientsize;//clientsize is not int it is socklen_t
+	int socketdesc,clientsize;//clientsize is not int it is socklen_t     no client sock in udp server because udp is connectionless protocol
 	struct sockaddr_in serveraddr,clientaddr;
 	 
 	char servermsg[2000],clientmsg[2000];
