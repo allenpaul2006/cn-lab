@@ -8,23 +8,24 @@
 #include<string.h>
 int main()
 {
+	int socketdesc,clientsock,clientsize,n,f;
 	struct sockaddr_in clientaddr,serveraddr;
-	int serversock,newserversock,clientsize,n,f;
+	
 	char filename[100],filedata[300];
 	fflush(stdin);
-	serversock=socket(AF_INET,SOCK_STREAM,0);
+	socketdesc=socket(AF_INET,SOCK_STREAM,0);
 	bzero((char*)&serveraddr,sizeof(serveraddr));
 	serveraddr.sin_family=AF_INET;
 	serveraddr.sin_port=2000;
 	serveraddr.sin_addr.s_addr=inet_addr("127.0.0.1");
-	bind(serversock,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
+	bind(socketdesc,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
 	
-	listen(serversock,5);
+	listen(socketdesc,5);
 	while(1)
 	{
 		clientsize=sizeof(clientaddr);
-		newserversock=accept(serversock,(struct sockaddr*)&clientaddr,&clientsize);
-		n=read(newserversock,filename,100);
+		clientsock=accept(socketdesc,(struct sockaddr*)&clientaddr,&clientsize);
+		n=read(clientsock,filename,100);
 		filename[n]=0;
 		printf("\nThe requested file from the client is %s.\n",filename);
 		
@@ -32,9 +33,10 @@ int main()
 		n=read(f,filedata,300);
 		printf("\nThe contents of the file: \n\n");
 		printf("%s",filedata);
-		write(newserversock,filedata,n);
+		write(clientsock,filedata,n);
 		exit(0);
 	}
-	close(serversock);
-	close(newserversock);
+	
+	close(clientsock);
+	close(socketdesc);
 }
