@@ -14,7 +14,8 @@ int main()
 	struct sockaddr_in serveraddr;
 	int clientsock,n,rdret,length;
 	char filename[20],filedata[300];
-	bzero((char*)&serveraddr,sizeof(serveraddr));
+	
+	memset(&serveraddr,'\0',sizeof(serveraddr));
 	serveraddr.sin_family=AF_INET;
 	serveraddr.sin_port=2000;
 	serveraddr.sin_addr.s_addr=inet_addr("127.0.0.1");
