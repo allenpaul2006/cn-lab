@@ -8,7 +8,6 @@
 #include<string.h>
 #include<stdlib.h>
 int main()
-
 {
 	int socketdesc,clientsock,clientsize,n,f;
 	struct sockaddr_in clientaddr,serveraddr;
@@ -16,8 +15,7 @@ int main()
 	char filename[100],filedata[300];
 	fflush(stdin);
 	socketdesc=socket(AF_INET,SOCK_STREAM,0);
-	
-	memset(&serveraddr,'\0',sizeof(serveraddr));
+	bzero((char*)&serveraddr,sizeof(serveraddr));
 	serveraddr.sin_family=AF_INET;
 	serveraddr.sin_port=2000;
 	serveraddr.sin_addr.s_addr=inet_addr("127.0.0.1");
@@ -29,7 +27,7 @@ int main()
 		clientsize=sizeof(clientaddr);
 		clientsock=accept(socketdesc,(struct sockaddr*)&clientaddr,&clientsize);
 		n=read(clientsock,filename,100);
-		filename[n]=0;
+		filename[n]='\0';
 		printf("\nThe requested file from the client is %s.\n",filename);
 		
 		f=open(filename,O_RDWR);
