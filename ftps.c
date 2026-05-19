@@ -13,7 +13,7 @@ int main()
 	struct sockaddr_in clientaddr,serveraddr;
 	
 	char filename[100],filedata[300];
-	fflush(stdin);
+	//fflush(stdin);
 	socketdesc=socket(AF_INET,SOCK_STREAM,0);
 	bzero((char*)&serveraddr,sizeof(serveraddr));
 	serveraddr.sin_family=AF_INET;
@@ -21,9 +21,8 @@ int main()
 	serveraddr.sin_addr.s_addr=inet_addr("127.0.0.1");
 	bind(socketdesc,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
 	
-	listen(socketdesc,5);
-	while(1)
-	{
+	listen(socketdesc,1);
+	
 		clientsize=sizeof(clientaddr);
 		clientsock=accept(socketdesc,(struct sockaddr*)&clientaddr,&clientsize);
 		n=read(clientsock,filename,100);
@@ -35,8 +34,7 @@ int main()
 		printf("\nThe contents of the file: \n\n");
 		printf("%s",filedata);
 		write(clientsock,filedata,n);
-		exit(0);
-	}
+	
 	
 	close(clientsock);
 	close(socketdesc);
